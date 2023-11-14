@@ -5,18 +5,12 @@ const Yup = require("yup");
 const Reserva = require('../models/Reserva');
 class ReservaController{
     async index(req, res){
-        const {user_id} = req.params;
-        const userExists = await User.findOne({where: {user_id: user_id}});
 
-        const user = await User.findByPk(userExists.id, {
-            attributes: ['id', 'name'],
-            include: {
-                association: 'reserva',
-                attributes: ["id", "data", "turma", "datashow", "horario"]
-            },  
+        const reservas = await User.findAll({
+            attributes: ['name', 'data', 'turma', 'datashow', 'horario',], 
         });
        
-        return res.json(user);
+        return res.json(reservas);
     }
 
     async store(req, res){
